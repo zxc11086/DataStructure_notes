@@ -1,3 +1,2 @@
-# myblog
-wa haha!!
-this is my first time commit my code to the github !
+# mynotes
+大三重学数据结构捏，这是我的学习记录
