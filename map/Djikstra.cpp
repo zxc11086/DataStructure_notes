@@ -7,6 +7,7 @@
 using namespace std;
 int vertexs,edges;
 bool visit[99999];
+int pre[99999];
 
 
 struct node{
@@ -18,6 +19,7 @@ int d[99999]; //起点到各点的最短路径
 void Dijkstra(int s){   //s 为起点
     fill(d,d+99999,INF);
     d[s]=0;
+    pre[s]=s;
     set<pair<int,int> >DIS; //  first表示距离，second表示节点
     DIS.insert({d[s],s});
     for(int i=0;i<vertexs;i++){
@@ -39,6 +41,7 @@ void Dijkstra(int s){   //s 为起点
             if(visit[v]==false){
                 if(d[u]+Adj[u][j].dis<d[v]){
                     d[v]=d[u]+Adj[u][j].dis;
+                    pre[v]=u;
                 }
                 DIS.insert({d[v],v});
             }
@@ -46,6 +49,15 @@ void Dijkstra(int s){   //s 为起点
     }
 }
 
+void DFS(int s,int v){  //求最短路径函数，s为起点，v为终点
+    if(v==s){
+        cout<<s<<endl;
+        return ;
+    }
+    DFS(s,pre[v]);
+    cout<<v<<endl;
+
+}
 int main(){
     cin>>vertexs>>edges;
     for(int i=0;i<edges;i++){
@@ -57,7 +69,10 @@ int main(){
         Adj[l].push_back(temp);
     }
     Dijkstra(1);    //这里我们假设以1为七点起点
-    for(int i=2;i<=vertexs;i++){
+    cout<<"the shortest path from 1 to 4 is :"<<endl;
+    DFS(1,4);       //求1到4的最短路径
+    cout<<"the length are as follows:"<<endl;
+    for(int i=1;i<=vertexs;i++){
         cout<<d[i]<<endl;
     }
 }
@@ -74,6 +89,13 @@ int main(){
     3 4 1
 
     输出：
+    the shortest path from 1 to 4 is :
+    1
+    5
+    3
+    4
+    the length are as follows:
+    0
     3
     2
     3
